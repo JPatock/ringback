@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RingBack — Your missed calls, answered in seconds</title>
+<meta name="description" content="RingBack texts your missed callers back in seconds and books them before they call the next agent. Done for you, TCPA-compliant, $297/mo." />
+<meta property="og:title" content="RingBack — The buyer hires whoever answers first" />
+<meta property="og:description" content="Half of all buyer inquiries never get a response. RingBack answers yours in seconds — done for you." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 12a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v20a12 12 0 0 1-12 12H30L14 56V44h-2A12 12 0 0 1 8 32Z' transform='translate(2 4)' fill='%2330C158'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0A0E13;        /* after hours */
+  --card:#121821;      /* dash */
+  --card-2:#0E141B;
+  --line:#1E2733;
+  --text:#E9EDF2;      /* porcelain */
+  --muted:#8A94A3;
+  --red:#FF5147;       /* missed */
+  --green:#30C158;     /* delivered — product + CTA only */
+  --green-deep:#27A94B;
+  --gold:#E5C36F;      /* commission — dollar figures only */
+  --disp:"Bricolage Grotesque",sans-serif;
+  --body:"Instrument Sans",sans-serif;
+  --mono:"Spline Sans Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+::selection{background:var(--green);color:#04220E}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.logo{font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.02em;text-decoration:none}
+.logo em{font-style:normal;color:var(--green)}
+.btn{display:inline-block;background:var(--green);color:#04220E;font-weight:600;text-decoration:none;padding:13px 24px;border-radius:12px;border:none;font-size:16px;font-family:var(--body);cursor:pointer;transition:background .15s ease, transform .15s ease}
+.btn:hover{background:var(--green-deep)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:6px}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--card);border-color:var(--muted)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding:56px 0 80px}
+.stamp{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.stamp::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red)}
+.stamp .t{color:var(--muted)}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(38px,5.4vw,64px);line-height:1.02;letter-spacing:-.03em}
+.hero h1 .lost{color:var(--muted)}
+.hero .lede{color:var(--muted);font-size:19px;max-width:46ch;margin:24px 0 32px}
+.hero .lede strong{color:var(--text);font-weight:600}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+
+/* phone */
+.phone{width:min(360px,100%);margin:0 auto;background:#05070A;border:1px solid #232D3A;border-radius:44px;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.03)}
+.screen{background:linear-gradient(180deg,#0C1118,#0A0E13);border-radius:32px;padding:18px 14px 22px;min-height:520px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.notch{width:110px;height:22px;background:#05070A;border-radius:12px;margin:0 auto 6px}
+.pill{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;align-self:center;text-align:center}
+.pill.missed{color:var(--red);border-color:rgba(255,81,71,.35)}
+.pill.booked{color:var(--green);border-color:rgba(48,193,88,.35)}
+.msg{max-width:82%;padding:11px 15px;border-radius:20px;font-size:15px;line-height:1.45}
+.msg .when{display:block;font-family:var(--mono);font-size:10.5px;opacity:.65;margin-top:5px}
+.msg.us{align-self:flex-end;background:var(--green);color:#04220E;border-bottom-right-radius:6px}
+.msg.them{align-self:flex-start;background:#1B232E;color:var(--text);border-bottom-left-radius:6px}
+.typing{align-self:flex-start;background:#1B232E;border-radius:20px;border-bottom-left-radius:6px;padding:14px 18px;display:flex;gap:5px}
+.typing.us{align-self:flex-end;background:var(--green);border-bottom-right-radius:6px;border-bottom-left-radius:20px}
+.typing i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.45;color:var(--text);animation:blink 1s infinite}
+.typing.us i{color:#04220E}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:.9}}
+.seq>*{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.seq>.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .seq>*{opacity:1;transform:none;transition:none}
+  .typing{display:none}
+}
+
+/* ---------- ledger ---------- */
+.ledger{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card-2)}
+.ledger .inner{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:0}
+.cell{padding:38px 28px;border-left:1px solid var(--line)}
+.cell:first-child{border-left:none}
+.cell b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(30px,3.4vw,44px);letter-spacing:-.02em;line-height:1;margin-bottom:10px}
+.cell.money b{color:var(--gold)}
+.cell.bleed b{color:var(--red)}
+.cell p{color:var(--muted);font-size:14.5px;line-height:1.5}
+.cell .src{display:block;font-family:var(--mono);font-size:11px;color:#5A6472;margin-top:12px;letter-spacing:.02em}
+
+/* ---------- sections ---------- */
+section{padding:96px 0}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4vw,46px);letter-spacing:-.02em;line-height:1.06;max-width:22ch}
+.sub{color:var(--muted);font-size:18px;max-width:58ch;margin-top:18px}
+.sub strong{color:var(--text)}
+
+/* call log timeline */
+.log{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 28px;position:relative}
+.entry .ts{font-family:var(--mono);font-size:13px;letter-spacing:.05em;margin-bottom:16px;display:block}
+.entry .ts.red{color:var(--red)}
+.entry .ts.green{color:var(--green)}
+.entry .ts.gold{color:var(--gold)}
+.entry h3{font-family:var(--disp);font-weight:700;font-size:21px;letter-spacing:-.01em;margin-bottom:8px}
+.entry p{color:var(--muted);font-size:15.5px}
+
+/* pricing */
+.plans{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:38px 34px;display:flex;flex-direction:column}
+.plan.core{border-color:rgba(48,193,88,.45);background:linear-gradient(180deg,rgba(48,193,88,.06),var(--card) 40%)}
+.plan .tag{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.plan.core .tag{color:var(--green)}
+.plan h3{font-family:var(--disp);font-weight:800;font-size:24px;letter-spacing:-.01em}
+.plan .amt{font-family:var(--disp);font-weight:800;font-size:52px;letter-spacing:-.03em;margin:14px 0 2px}
+.plan .amt small{font-size:19px;color:var(--muted);font-weight:500;letter-spacing:0}
+.plan .setup{font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:24px}
+.plan ul{list-style:none;margin:0 0 30px;flex:1}
+.plan li{padding:8px 0 8px 30px;position:relative;font-size:15.5px;color:var(--text)}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.plan li.dim{color:var(--muted)}
+.guarantee{margin-top:28px;max-width:880px;border:1px dashed rgba(229,195,111,.5);border-radius:18px;padding:28px 32px;background:rgba(229,195,111,.04)}
+.guarantee p{font-size:17px}
+.guarantee b{color:var(--gold)}
+.guarantee .fine{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:10px}
+
+/* objections */
+.faq{margin-top:48px;max-width:820px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 4px;font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--green);font-size:22px;flex-shrink:0;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 4px 26px;color:var(--muted);max-width:62ch}
+.faq .a strong{color:var(--text)}
+
+/* founder */
+.founder{background:var(--card-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.founder .inner{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;max-width:820px}
+.sig{width:64px;height:64px;border-radius:18px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:24px;color:var(--green)}
+.founder p{color:var(--muted);max-width:60ch}
+.founder p strong{color:var(--text)}
+.founder .name{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:14px;letter-spacing:.04em}
+
+/* form */
+.demo h2{max-width:none}
+.form{margin-top:44px;max-width:560px;display:grid;gap:16px}
+.form label{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.form input,.form select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:15px 16px;font-size:16px;font-family:var(--body)}
+.form input:focus,.form select:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+.form input::placeholder{color:#5A6472}
+.form .btn{margin-top:6px;padding:17px 24px;font-size:17px}
+.form .note{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.6}
+
+/* footer */
+footer{padding:48px 0 56px;color:#5A6472;font-size:14px}
+footer .comp{font-family:var(--mono);font-size:12.5px;line-height:1.7;max-width:72ch;margin-bottom:20px;color:var(--muted)}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* reveal on scroll — hidden ONLY when JS confirms it can reveal (fail-open) */
+html.js .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+html.js .rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none;transition:none}}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:48px;padding:40px 0 64px}
+  .ledger .inner{grid-template-columns:1fr 1fr}
+  .cell{border-left:none;border-top:1px solid var(--line)}
+  .cell:nth-child(-n+2){border-top:none}
+  .cell:nth-child(even){border-left:1px solid var(--line)}
+  .log{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr}
+  section{padding:72px 0}
+}
+@media (max-width:560px){
+  .ledger .inner{grid-template-columns:1fr}
+  .cell{border-left:none!important;border-top:1px solid var(--line)}
+  .cell:first-child{border-top:none}
+  .founder .inner{grid-template-columns:1fr}
+  .top .btn{padding:11px 16px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#">Ring<em>Back</em></a>
+    <a class="btn" href="#demo">See a demo</a>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="stamp">Tue 2:15 PM · Incoming call <span class="t">— missed</span></div>
+      <h1>The buyer hires whoever answers first. <span class="lost">Last week, that wasn&rsquo;t you.</span></h1>
+      <p class="lede">Half of all buyer inquiries never get a response — and most buyers hire the only agent they actually talk to. <strong>RingBack texts your missed callers back in seconds</strong> and books them before they scroll to the next agent. Done for you. Nothing to install.</p>
+      <div class="cta-row">
+        <a class="btn" href="#demo">Show me on my own number</a>
+        <a class="btn btn-ghost" href="#pricing">See pricing</a>
+      </div>
+    </div>
+
+    <div class="phone" aria-label="Example RingBack conversation: a missed call is texted back and turns into a booked showing">
+      <div class="screen seq" id="thread">
+        <div class="notch" aria-hidden="true"></div>
+        <div class="pill missed">Missed call · (801) 555-0147 · 2:15 PM</div>
+        <div class="msg us">Hi, this is Sarah Bennett&rsquo;s team — sorry we missed you! Are you calling about a listing, or thinking about selling?<span class="when">2:15 PM · sent by RingBack</span></div>
+        <div class="msg them">Hi! Saw the house on Maple Grove Ln. Is it still available??<span class="when">2:16 PM</span></div>
+        <div class="msg us">It is! Sarah can walk you through it tomorrow. Morning or afternoon?<span class="when">2:16 PM</span></div>
+        <div class="msg them">Afternoon works 👍<span class="when">2:18 PM</span></div>
+        <div class="pill booked">Showing booked · 2:19 PM · lead sent to Sarah</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ledger rv">
+  <div class="wrap inner">
+    <div class="cell bleed">
+      <b>48%</b>
+      <p>of buyer inquiries never get any response. Not late — never.</p>
+      <span class="src">WAV Group Agent Responsiveness Study</span>
+    </div>
+    <div class="cell">
+      <b>9%</b>
+      <p>of the 74 largest U.S. brokerages respond within 5 minutes.</p>
+      <span class="src">Secret-shopper study, 2024</span>
+    </div>
+    <div class="cell">
+      <b>67&ndash;76%</b>
+      <p>of buyers interview exactly one agent — whoever answers first wins by default.</p>
+      <span class="src">NAR Profile of Home Buyers &amp; Sellers, 2025</span>
+    </div>
+    <div class="cell money">
+      <b>$10,000+</b>
+      <p>gross commission walking away with a single fumbled call.</p>
+      <span class="src">Avg. commission on a median U.S. home, 2025</span>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow rv">Call log · what actually happens</p>
+    <h2 class="rv">Four minutes, start to booked.</h2>
+    <p class="sub rv">You&rsquo;re mid-showing, driving, or at a closing. Your phone does what phones do. Here&rsquo;s the part you never see:</p>
+    <div class="log">
+      <div class="entry rv">
+        <span class="ts red">2:15:04 PM</span>
+        <h3>A buyer calls. You can&rsquo;t pick up.</h3>
+        <p>They don&rsquo;t leave a voicemail. They go back to Zillow, where three more agents are one tap away.</p>
+      </div>
+      <div class="entry rv">
+        <span class="ts green">2:15:12 PM</span>
+        <h3>RingBack texts them back — in seconds.</h3>
+        <p>A real conversation from your number: which listing, buying or selling, timeline. It answers questions and offers a showing time.</p>
+      </div>
+      <div class="entry rv">
+        <span class="ts gold">2:19 PM</span>
+        <h3>Booked, logged, and handed to you warm.</h3>
+        <p>The lead lands on your phone with the whole thread. Every month you get a report in the only unit that matters: dollars kept.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <p class="eyebrow rv">Pricing · month to month</p>
+    <h2 class="rv">Less than one-third of one commission. Per year.</h2>
+    <p class="sub rv">You already pay Zillow for leads and let half the calls ring out. RingBack is the cheapest employee you&rsquo;ll ever hire — and we set up everything.</p>
+
+    <div class="plans">
+      <div class="plan core rv">
+        <span class="tag">RingBack Core</span>
+        <h3>Never miss the text-back</h3>
+        <div class="amt">$297<small>/mo</small></div>
+        <p class="setup">+ $297 setup — waived for founding clients</p>
+        <ul>
+          <li>Missed-call text-back in seconds, 24/7, on your existing number</li>
+          <li>Conversational follow-up that qualifies and books showings</li>
+          <li>Every hot lead pushed straight to your phone or CRM</li>
+          <li>Carrier registration &amp; TCPA-safe templates handled for you</li>
+          <li>Monthly report in dollars: calls caught, leads saved</li>
+        </ul>
+        <a class="btn" href="#demo">Start with a live demo</a>
+      </div>
+      <div class="plan rv">
+        <span class="tag">RingBack Voice</span>
+        <h3>The call gets answered</h3>
+        <div class="amt">$597<small>/mo</small></div>
+        <p class="setup">+ $497 setup</p>
+        <ul>
+          <li>Everything in Core</li>
+          <li>An AI receptionist answers the call itself — 24/7</li>
+          <li>Qualifies buyers: budget, pre-approval, timeline</li>
+          <li>Answers listing questions and books directly on your calendar</li>
+          <li class="dim">Compare: a human answering service runs $350&ndash;575/mo for a few hundred minutes</li>
+        </ul>
+        <a class="btn btn-ghost" href="#demo">Ask about Voice</a>
+      </div>
+    </div>
+
+    <div class="guarantee rv">
+      <p><b>The 30-day guarantee:</b> if RingBack doesn&rsquo;t capture a conversation you would have missed in your first 30 days, that month is free.</p>
+      <p class="fine">Month to month · cancel anytime · no annual contract · pause for the slow season</p>
+    </div>
+  </div>
+</section>
+
+<section id="objections">
+  <div class="wrap">
+    <p class="eyebrow rv">Fair questions</p>
+    <h2 class="rv">You&rsquo;re skeptical. Good — you should be.</h2>
+    <div class="faq rv">
+      <details>
+        <summary>My phone is always on me.</summary>
+        <p class="a">You answer when you can. RingBack catches the ones you physically can&rsquo;t — mid-showing, driving, in a closing, the 9 PM Zillow click. Research published in <strong>Harvard Business Review</strong> found the average business takes 42 hours to respond to a new lead, and 23% never respond at all. The buyer isn&rsquo;t waiting 42 hours.</p>
+      </details>
+      <details>
+        <summary>Doesn&rsquo;t my CRM already do this?</summary>
+        <p class="a">Follow Up Boss and most agent CRMs have <strong>no native missed-call text-back</strong> — missed calls sit in an inbox waiting for you to notice. Add-ons that patch it start at $139/mo and you still have to configure and babysit them. RingBack is done <strong>for</strong> you: we build it, run it, and report on it.</p>
+      </details>
+      <details>
+        <summary>Is auto-texting people even legal?</summary>
+        <p class="a">Texting back someone who just called you is compliant — <strong>if</strong> it&rsquo;s done right: transactional first message, your name on it, instant opt-out, and no marketing drips without written consent. We register your number with the carriers (A2P 10DLC) and keep every template TCPA-safe. The $49 DIY tools leave all of that legal exposure on you.</p>
+      </details>
+      <details>
+        <summary>I don&rsquo;t miss that many calls.</summary>
+        <p class="a">Nobody logs the calls they miss — that&rsquo;s the trap. Industry secret-shopper studies keep finding the same thing: <strong>about half of inquiries get no response</strong>, and the agents involved would all say they&rsquo;re responsive. One saved deal is ~$10,000. If RingBack catches one a <strong>year</strong>, you&rsquo;re up 3x.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="founder">
+  <div class="wrap" style="padding-top:72px;padding-bottom:72px">
+    <div class="inner">
+      <div class="sig rv" aria-hidden="true">JP</div>
+      <div class="rv">
+        <p><strong>RingBack is run by a person, not a platform.</strong> I&rsquo;m Jack — Salt Lake City, business student, grew up around the trades. I build every install myself, I answer my own phone (obviously), and you&rsquo;ll never file a support ticket to reach me. First handful of clients get founding pricing, locked for life.</p>
+        <p class="name">Jack Patock · Founder, RingBack · Salt Lake City, UT</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="demo" class="demo">
+  <div class="wrap">
+    <p class="eyebrow rv">The proof · takes one minute</p>
+    <h2 class="rv">See it fire on your own number.</h2>
+    <p class="sub rv">Leave your cell. We&rsquo;ll set up a live demo: you call, you don&rsquo;t pick up, and you watch the text-back land — <strong>on your phone, in seconds.</strong> No deck, no sales call, no card.</p>
+
+    <form class="form rv" action="https://formsubmit.co/patockjack@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="RingBack demo request" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+      <div>
+        <label for="f-name">Name</label>
+        <input id="f-name" name="name" type="text" placeholder="Sarah Bennett" required autocomplete="name" />
+      </div>
+      <div>
+        <label for="f-cell">Cell number</label>
+        <input id="f-cell" name="cell" type="tel" placeholder="(801) 555-0147" required autocomplete="tel" />
+      </div>
+      <div>
+        <label for="f-mkt">Market / brokerage <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input id="f-mkt" name="market" type="text" placeholder="Salt Lake · Windermere" />
+      </div>
+      <button class="btn" type="submit">Text me a live demo</button>
+      <p class="note">We text you once to run the demo. No lists, no drip campaigns — that would be a weird look for a company built on doing texting right.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="comp">Every RingBack message is TCPA-compliant: carrier-registered (A2P 10DLC), transactional-first, instant STOP handling, and never marketing without written consent. We put this in the footer because it&rsquo;s the part everyone else hopes you won&rsquo;t ask about.</p>
+    <div class="row">
+      <span>© 2026 RingBack · Salt Lake City, UT</span>
+      <span>ringback — your missed calls, answered</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveals — only engage when IO is available; reveal everything after 3s no matter what */
+  var rvs = document.querySelectorAll('.rv');
+  if(!reduce && 'IntersectionObserver' in window){
+    document.documentElement.classList.add('js');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+    },{threshold:.15});
+    rvs.forEach(function(el){io.observe(el);});
+    setTimeout(function(){ rvs.forEach(function(el){el.classList.add('on');}); }, 3000);
+  }
+
+  /* hero thread plays itself */
+  var thread = document.getElementById('thread');
+  var items = Array.prototype.slice.call(thread.children).filter(function(el){return !el.classList.contains('notch');});
+  if(reduce){ items.forEach(function(el){el.classList.add('on');}); return; }
+
+  function show(i){
+    if(i >= items.length){ return; }
+    var el = items[i];
+    var isMsg = el.classList.contains('msg');
+    var delay = i === 0 ? 600 : 1100;
+
+    setTimeout(function(){
+      if(isMsg){
+        var t = document.createElement('div');
+        t.className = 'typing on' + (el.classList.contains('us') ? ' us' : '');
+        t.innerHTML = '<i></i><i></i><i></i>';
+        thread.insertBefore(t, el);
+        setTimeout(function(){
+          thread.removeChild(t);
+          el.classList.add('on');
+          show(i+1);
+        }, 900);
+      }else{
+        el.classList.add('on');
+        show(i+1);
+      }
+    }, delay);
+  }
+  show(0);
+})();
+</script>
+</body>
+</html>

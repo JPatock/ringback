@@ -167,7 +167,39 @@ footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 /* reveal on scroll — hidden ONLY when JS confirms it can reveal (fail-open) */
 html.js .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 html.js .rv.on{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none;transition:none}}
+
+/* staggered reveals — children of a .stagger container cascade in.
+   Reveal rides the `translate` property so `transform` stays free for hover lifts. */
+html.js .stagger>*{opacity:0;translate:0 22px;transition:opacity .65s ease,translate .65s ease,transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+html.js .stagger.on>*{opacity:1;translate:0 0}
+html.js .stagger.on>*:nth-child(2){transition-delay:.12s,.12s,0s,0s,0s}
+html.js .stagger.on>*:nth-child(3){transition-delay:.24s,.24s,0s,0s,0s}
+html.js .stagger.on>*:nth-child(4){transition-delay:.36s,.36s,0s,0s,0s}
+
+/* call-log timeline draws itself: missed → answered → paid */
+.log{position:relative;padding-top:26px}
+.log::before{content:"";position:absolute;top:0;left:6px;right:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--red) 0%,var(--green) 50%,var(--gold) 100%);transform:scaleX(0);transform-origin:left center;transition:transform 1.5s cubic-bezier(.22,1,.36,1) .2s}
+html.js .log.on::before{transform:scaleX(1)}
+
+/* cards acknowledge the cursor */
+.entry,.plan{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.entry:hover,.plan:hover{transform:translateY(-4px);border-color:#2C3A4D;box-shadow:0 16px 44px rgba(0,0,0,.38)}
+.plan.core:hover{border-color:rgba(48,193,88,.7)}
+.btn:hover{box-shadow:0 8px 28px rgba(48,193,88,.28)}
+.btn-ghost:hover{box-shadow:none}
+
+/* FAQ answers ease open where the browser supports it */
+@supports (interpolate-size: allow-keywords){
+  :root{interpolate-size:allow-keywords}
+  .faq details::details-content{opacity:0;block-size:0;overflow:hidden;transition:content-visibility .35s allow-discrete,opacity .35s ease,block-size .35s ease}
+  .faq details[open]::details-content{opacity:1;block-size:auto}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html.js .rv,html.js .stagger>*{opacity:1;transform:none;translate:none;transition:none}
+  .log::before{transform:scaleX(1);transition:none}
+  .entry:hover,.plan:hover{transform:none}
+}
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
@@ -176,7 +208,8 @@ html.js .rv.on{opacity:1;transform:none}
   .cell{border-left:none;border-top:1px solid var(--line)}
   .cell:nth-child(-n+2){border-top:none}
   .cell:nth-child(even){border-left:1px solid var(--line)}
-  .log{grid-template-columns:1fr}
+  .log{grid-template-columns:1fr;padding-top:0}
+  .log::before{display:none}
   .plans{grid-template-columns:1fr}
   section{padding:72px 0}
 }
@@ -222,8 +255,8 @@ html.js .rv.on{opacity:1;transform:none}
   </div>
 </div>
 
-<div class="ledger rv">
-  <div class="wrap inner">
+<div class="ledger">
+  <div class="wrap inner stagger count">
     <div class="cell bleed">
       <b>48%</b>
       <p>of buyer inquiries never get any response. Not late — never.</p>
@@ -252,18 +285,18 @@ html.js .rv.on{opacity:1;transform:none}
     <p class="eyebrow rv">Call log · what actually happens</p>
     <h2 class="rv">Four minutes, start to booked.</h2>
     <p class="sub rv">You&rsquo;re mid-showing, driving, or at a closing. Your phone does what phones do. Here&rsquo;s the part you never see:</p>
-    <div class="log">
-      <div class="entry rv">
+    <div class="log stagger">
+      <div class="entry">
         <span class="ts red">2:15:04 PM</span>
         <h3>A buyer calls. You can&rsquo;t pick up.</h3>
         <p>They don&rsquo;t leave a voicemail. They go back to Zillow, where three more agents are one tap away.</p>
       </div>
-      <div class="entry rv">
+      <div class="entry">
         <span class="ts green">2:15:12 PM</span>
         <h3>RingBack texts them back — in seconds.</h3>
         <p>A real conversation from your number: which listing, buying or selling, timeline. It answers questions and offers a showing time.</p>
       </div>
-      <div class="entry rv">
+      <div class="entry">
         <span class="ts gold">2:19 PM</span>
         <h3>Booked, logged, and handed to you warm.</h3>
         <p>The lead lands on your phone with the whole thread. Every month you get a report in the only unit that matters: dollars kept.</p>
@@ -278,8 +311,8 @@ html.js .rv.on{opacity:1;transform:none}
     <h2 class="rv">Less than one-third of one commission. Per year.</h2>
     <p class="sub rv">You already pay Zillow for leads and let half the calls ring out. RingBack is the cheapest employee you&rsquo;ll ever hire — and we set up everything.</p>
 
-    <div class="plans">
-      <div class="plan core rv">
+    <div class="plans stagger">
+      <div class="plan core">
         <span class="tag">RingBack Core</span>
         <h3>Never miss the text-back</h3>
         <div class="amt">$297<small>/mo</small></div>
@@ -293,7 +326,7 @@ html.js .rv.on{opacity:1;transform:none}
         </ul>
         <a class="btn" href="#demo">Start with a live demo</a>
       </div>
-      <div class="plan rv">
+      <div class="plan">
         <span class="tag">RingBack Voice</span>
         <h3>The call gets answered</h3>
         <div class="amt">$597<small>/mo</small></div>
@@ -398,14 +431,58 @@ html.js .rv.on{opacity:1;transform:none}
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* scroll reveals — only engage when IO is available; reveal everything after 3s no matter what */
-  var rvs = document.querySelectorAll('.rv');
+  var rvs = document.querySelectorAll('.rv, .stagger');
+
+  /* stat counters: animate every number inside, preserving %, $, commas, and ranges */
+  function countUp(el){
+    if(el.dataset.counted){ return; }
+    el.dataset.counted = '1';
+    var final = el.textContent;
+    var parts = final.split(/([\d,]+)/);
+    var t0 = performance.now(), dur = 1300;
+    function frame(now){
+      var p = Math.min(1, (now - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = parts.map(function(s){
+        if(/^[\d,]+$/.test(s)){
+          var n = parseInt(s.replace(/,/g,''), 10);
+          return Math.round(n * e).toLocaleString('en-US');
+        }
+        return s;
+      }).join('');
+      if(p < 1){ requestAnimationFrame(frame); } else { el.textContent = final; }
+    }
+    requestAnimationFrame(frame);
+  }
+  function reveal(el){
+    el.classList.add('on');
+    if(el.classList.contains('count')){
+      el.querySelectorAll('.cell b').forEach(countUp);
+    }
+  }
+
   if(!reduce && 'IntersectionObserver' in window){
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+      entries.forEach(function(e){ if(e.isIntersecting){ reveal(e.target); io.unobserve(e.target);} });
     },{threshold:.15});
     rvs.forEach(function(el){io.observe(el);});
-    setTimeout(function(){ rvs.forEach(function(el){el.classList.add('on');}); }, 3000);
+    setTimeout(function(){ rvs.forEach(reveal); }, 3000);
+  }
+
+  /* hero phone drifts gently against the scroll */
+  var ph = document.querySelector('.phone');
+  if(ph && !reduce){
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if(ticking){ return; }
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = Math.min(window.scrollY, 800);
+        ph.style.transform = 'translateY(' + (y * 0.06) + 'px)';
+        ticking = false;
+      });
+    }, {passive:true});
   }
 
   /* hero thread plays itself */

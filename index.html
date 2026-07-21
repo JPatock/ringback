@@ -564,22 +564,7 @@ window.addEventListener('DOMContentLoaded', function(){
     .to('.main-card',{y:-vh-300,ease:'power3.in',duration:1.3},'-=0.3')
     .to({},{duration:2.2});
 
-  /* mouse: sheen tracks the cursor on the card, the phone tilts in 3D.
-     One reused tween per axis (quickTo), no layout reads, and mouse events
-     arriving mid-scroll are ignored — Chrome synthesizes them while wheel-
-     scrolling, which was fighting the scrub and lagging the phone. */
-  var card = document.querySelector('.main-card'), ph = document.querySelector('.cine .phone');
-  var tiltY = gsap.quickTo(ph,'rotationY',{duration:.6,ease:'power3.out'});
-  var tiltX = gsap.quickTo(ph,'rotationX',{duration:.6,ease:'power3.out'});
-  var lastScroll = 0;
-  window.addEventListener('scroll', function(){ lastScroll = performance.now(); }, {passive:true});
-  window.addEventListener('mousemove', function(e){
-    if(window.scrollY > 4000 || performance.now() - lastScroll < 150){ return; }
-    card.style.setProperty('--mx', e.clientX + 'px');
-    card.style.setProperty('--my', e.clientY + 'px');
-    tiltY((e.clientX/window.innerWidth - .5)*16);
-    tiltX(-(e.clientY/window.innerHeight - .5)*16);
-  },{passive:true});
+  /* interactive cursor removed — the card sheen stays as a fixed center glow */
 });
 </script>
 <script>
@@ -626,8 +611,9 @@ window.addEventListener('DOMContentLoaded', function(){
     setTimeout(function(){ rvs.forEach(reveal); }, 3000);
   }
 
-  /* hero phone drifts gently against the scroll */
-  var ph = document.querySelector('.phone');
+  /* hero phone drifts gently against the scroll — fallback hero only;
+     an unscoped '.phone' here grabs the cinematic phone and fights GSAP */
+  var ph = document.querySelector('.hero-fallback .phone');
   if(ph && !reduce){
     var ticking = false;
     window.addEventListener('scroll', function(){

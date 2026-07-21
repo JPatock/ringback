@@ -203,6 +203,43 @@ html.js .log.on::before{transform:scaleX(1)}
   .entry:hover,.plan:hover{transform:none}
 }
 
+/* ---------- cinematic hero (desktop + motion-ok + GSAP loaded; otherwise .hero-fallback shows) ---------- */
+.cine{display:none;position:relative;height:100vh;overflow:hidden;background:var(--bg);perspective:1500px}
+html.cine-on .cine{display:block}
+html.cine-on .hero-fallback{display:none}
+.cine .gr{visibility:hidden}
+.cine .grain{position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.05;mix-blend-mode:overlay;background:url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>')}
+.cine .grid-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;background-size:60px 60px;background-image:linear-gradient(to right,rgba(233,237,242,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(233,237,242,.05) 1px,transparent 1px);-webkit-mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%)}
+.cine .layer{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px}
+.hero-text-wrapper{z-index:10;will-change:transform}
+.hero-text-wrapper .stamp{justify-content:center}
+.cine .tagline{font-family:var(--disp);font-weight:800;letter-spacing:-.03em;font-size:clamp(44px,6vw,88px);line-height:1.04}
+.text-3d{color:var(--text);text-shadow:0 10px 30px rgba(233,237,242,.16),0 2px 4px rgba(233,237,242,.08)}
+.text-silver{background:linear-gradient(180deg,var(--text) 0%,rgba(138,148,163,.55) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transform:translateZ(0);filter:drop-shadow(0 10px 20px rgba(233,237,242,.12))}
+.cine .scroll-hint{margin-top:30px;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cta-wrapper{z-index:10}
+.cta-wrapper h2{max-width:none;font-size:clamp(36px,5vw,68px)}
+.cta-wrapper .sub{margin:20px auto 38px}
+.card-layer{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;pointer-events:none;perspective:1500px}
+.main-card{pointer-events:auto;position:relative;overflow:hidden;width:85vw;height:85vh;border-radius:40px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#0E2A66 0%,#070D1A 100%);border:1px solid rgba(255,255,255,.05);box-shadow:0 40px 100px -20px rgba(0,0,0,.9),0 20px 40px -20px rgba(0,0,0,.8),inset 0 1px 2px rgba(255,255,255,.14),inset 0 -2px 4px rgba(0,0,0,.8)}
+.card-sheen{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:5;mix-blend-mode:screen;background:radial-gradient(800px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.06) 0%,transparent 40%)}
+.card-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(24px,4vw,64px);width:100%;max-width:1280px;padding:0 clamp(24px,5vw,64px)}
+.card-left-text{text-align:left}
+.card-left-text h3{font-family:var(--disp);font-weight:800;font-size:clamp(24px,2.4vw,34px);letter-spacing:-.01em;line-height:1.12;margin-bottom:16px;color:#fff}
+.card-left-text p{color:rgba(202,220,255,.72);font-size:16px;max-width:36ch}
+.card-right-text{text-align:right;font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:-.04em;font-size:clamp(48px,6vw,92px);line-height:.92;background:linear-gradient(180deg,#fff 0%,#A1A1AA 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transform:translateZ(0);filter:drop-shadow(0 12px 24px rgba(0,0,0,.8))}
+.mockup-wrap{position:relative;z-index:3;will-change:transform;transform-style:preserve-3d}
+.mockup-scale{position:relative;transform-style:preserve-3d}
+@media (max-height:860px){.mockup-scale{scale:.82}}
+.cine .phone{width:320px;margin:0;will-change:transform}
+.cine .screen{min-height:480px}
+.floating-badge{position:absolute;z-index:6;display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:16px;text-align:left;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.01));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 25px 50px -12px rgba(0,0,0,.8),inset 0 1px 1px rgba(255,255,255,.18)}
+.floating-badge .ico{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;border:1px solid rgba(74,158,255,.3);background:linear-gradient(180deg,rgba(74,158,255,.2),rgba(74,158,255,.04))}
+.floating-badge b{display:block;color:#fff;font-size:13.5px;letter-spacing:-.01em}
+.floating-badge span{color:rgba(202,220,255,.55);font-size:11.5px;font-family:var(--mono)}
+.badge-a{top:34px;left:-160px}
+.badge-b{bottom:64px;right:-168px}
+
 /* ---------- responsive ---------- */
 @media (max-width:960px){
   .hero{grid-template-columns:1fr;gap:48px;padding:40px 0 64px}
@@ -231,8 +268,61 @@ html.js .log.on::before{transform:scaleX(1)}
     <a class="logo" href="#">Ring<em>Back</em></a>
     <a class="btn" href="#demo">See a demo</a>
   </header>
+</div>
 
-  <div class="hero">
+<section class="cine" aria-label="How RingBack catches a missed call">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <div class="layer hero-text-wrapper">
+    <div class="stamp gr text-track">Tue 2:15 PM · Incoming call <span class="t">— missed</span></div>
+    <h1 class="tagline text-3d gr text-track">The homeowner hires</h1>
+    <h1 class="tagline text-silver gr text-days" aria-hidden="true">whoever answers first.</h1>
+    <p class="scroll-hint gr text-track">Scroll — this is the call you didn&rsquo;t see</p>
+  </div>
+
+  <div class="layer cta-wrapper gr">
+    <h2 class="text-silver">Stop losing jobs you already paid for.</h2>
+    <p class="sub">Google and Angi make your phone ring. RingBack makes sure ringing isn&rsquo;t the end of the story — done for you, on your existing number, in seconds.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn" href="#demo">See the live demo</a>
+      <a class="btn btn-ghost" href="#pricing">See pricing</a>
+    </div>
+  </div>
+
+  <div class="card-layer">
+    <div class="main-card gr">
+      <div class="card-sheen" aria-hidden="true"></div>
+      <div class="card-grid">
+        <div class="card-left-text gr">
+          <h3>Missed the call.<br>Kept the customer.</h3>
+          <p>The second your line rings out, RingBack texts the homeowner back from your business — and books the job before they call the next company on Google.</p>
+        </div>
+        <div class="mockup-wrap gr">
+          <div class="mockup-scale">
+            <div class="phone" aria-hidden="true">
+              <div class="screen">
+                <div class="notch"></div>
+                <div class="pill missed cine-msg">Missed call · (801) 555-0147 · 2:15 PM</div>
+                <div class="msg us cine-msg">Hi, this is Summit Plumbing — sorry we missed your call! What can we help you with?<span class="when">2:15 PM · sent by RingBack</span></div>
+                <div class="msg them cine-msg">My water heater is leaking all over the garage floor!!<span class="when">2:16 PM</span></div>
+                <div class="msg us cine-msg">That&rsquo;s no fun — we can have a tech out today. Does this afternoon work?<span class="when">2:16 PM</span></div>
+                <div class="msg them cine-msg">Yes please 🙏<span class="when">2:18 PM</span></div>
+                <div class="pill booked cine-msg">Job booked · 2:19 PM · sent to Mike&rsquo;s phone</div>
+              </div>
+            </div>
+            <div class="floating-badge badge-a gr"><div class="ico" aria-hidden="true">⚡</div><div><b>9-second text-back</b><span>missed call caught</span></div></div>
+            <div class="floating-badge badge-b gr"><div class="ico" aria-hidden="true">✅</div><div><b>Job booked</b><span>thread sent to Mike</span></div></div>
+          </div>
+        </div>
+        <div class="card-right-text gr" aria-hidden="true">Ring<br>Back</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="hero hero-fallback">
     <div>
       <div class="stamp">Tue 2:15 PM · Incoming call <span class="t">— missed</span></div>
       <h1>The homeowner hires whoever answers first. <span class="lost">Last week, that wasn&rsquo;t you.</span></h1>
@@ -431,6 +521,63 @@ html.js .log.on::before{transform:scaleX(1)}
   </div>
 </footer>
 
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+<script>
+/* cinematic hero — engages only on desktop, motion-ok, GSAP loaded; anything else keeps .hero-fallback */
+window.addEventListener('DOMContentLoaded', function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || window.innerWidth < 900 || !window.gsap || !window.ScrollTrigger){ return; }
+  gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add('cine-on');
+  /* smooth scroll-behavior fights ScrollTrigger's pin refresh (scroll restore animates → scrub drifts) */
+  document.documentElement.style.scrollBehavior = 'auto';
+
+  var vh = window.innerHeight;
+  gsap.set('.cine .gr',{autoAlpha:0});
+  gsap.set('.text-track',{y:60,scale:.85,filter:'blur(20px)'});
+  gsap.set('.text-days',{autoAlpha:1,clipPath:'inset(0 100% 0 0)'});
+  gsap.set('.main-card',{y:vh+200,autoAlpha:1});
+  gsap.set('.cta-wrapper',{autoAlpha:0,scale:.8,filter:'blur(30px)'});
+  gsap.set('.cine-msg',{autoAlpha:0,y:26});
+
+  gsap.timeline({delay:.25})
+    .to('.text-track',{duration:1.6,autoAlpha:1,y:0,scale:1,filter:'blur(0px)',ease:'expo.out',stagger:.12})
+    .to('.text-days',{duration:1.3,clipPath:'inset(0 0% 0 0)',ease:'power4.inOut'},'-=1.0');
+
+  var tl = gsap.timeline({scrollTrigger:{trigger:'.cine',start:'top top',end:'+=4600',pin:true,scrub:1,anticipatePin:1}});
+  tl.to(['.hero-text-wrapper','.cine .grid-bg'],{scale:1.15,filter:'blur(20px)',opacity:.15,ease:'power2.inOut',duration:2},0)
+    .to('.main-card',{y:0,ease:'power3.inOut',duration:2},0)
+    .to('.main-card',{width:'100vw',height:'100vh',borderRadius:0,ease:'power3.inOut',duration:1.5})
+    .fromTo('.mockup-wrap',{y:300,z:-500,rotationX:50,rotationY:-30,autoAlpha:0,scale:.6},{y:0,z:0,rotationX:0,rotationY:0,autoAlpha:1,scale:1,ease:'expo.out',duration:2.5},'-=0.8')
+    .to('.cine-msg',{autoAlpha:1,y:0,stagger:.3,duration:1,ease:'power2.out'},'-=1.4')
+    .fromTo('.floating-badge',{y:80,autoAlpha:0,scale:.7,rotationZ:-8},{y:0,autoAlpha:1,scale:1,rotationZ:0,ease:'back.out(1.5)',duration:1.4,stagger:.25},'-=1.0')
+    .fromTo('.card-left-text',{x:-50,autoAlpha:0},{x:0,autoAlpha:1,ease:'power4.out',duration:1.5},'-=1.4')
+    .fromTo('.card-right-text',{x:50,autoAlpha:0,scale:.85},{x:0,autoAlpha:1,scale:1,ease:'expo.out',duration:1.5},'<')
+    .to({},{duration:2})
+    .set('.hero-text-wrapper',{autoAlpha:0})
+    .set('.cta-wrapper',{autoAlpha:1})
+    .to({},{duration:.8})
+    .to(['.mockup-wrap','.floating-badge','.card-left-text','.card-right-text'],{scale:.9,y:-40,autoAlpha:0,ease:'power3.in',duration:1.2,stagger:.05})
+    .to('.main-card',{width:'85vw',height:'85vh',borderRadius:'40px',ease:'expo.inOut',duration:1.2},'pullback-=0.4')
+    .to('.cta-wrapper',{scale:1,filter:'blur(0px)',ease:'expo.inOut',duration:1.4},'pullback-=0.4')
+    .to('.main-card',{y:-vh-300,ease:'power3.in',duration:1.3},'-=0.3')
+    .to({},{duration:2.2});
+
+  /* mouse: sheen tracks the cursor on the card, the phone tilts in 3D */
+  var card = document.querySelector('.main-card'), ph = document.querySelector('.cine .phone'), raf = 0;
+  window.addEventListener('mousemove', function(e){
+    if(window.scrollY > 4000){ return; }
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function(){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX - r.left)+'px');
+      card.style.setProperty('--my',(e.clientY - r.top)+'px');
+      gsap.to(ph,{rotationY:(e.clientX/window.innerWidth - .5)*16,rotationX:-(e.clientY/window.innerHeight - .5)*16,ease:'power3.out',duration:1.2});
+    });
+  },{passive:true});
+});
+</script>
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
